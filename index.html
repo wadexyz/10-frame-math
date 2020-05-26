@@ -1,0 +1,340 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <link rel="stylesheet" href="styles.css">
+    <!-- Optional JavaScript -->
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+
+    <title>Hello, world!</title>
+  </head>
+  <body>
+
+    <div class="container">
+        <div class="row">
+          <div class="col-10">
+            <h1 class="mb-3 text-muted app-title">10 Frame Math</h1>
+          </div>
+          <div class="col-12">
+            &nbsp;
+          </div>
+        </div>
+
+        <div class="row">
+            <div class="col-2">
+                <h2 class="display-1 mb-3 numbers" id="left-term">?</h2>
+            </div>  
+            <div class="col-2">
+                <h2 class="display-1 mb-3">+</h2>
+            </div>  
+            <div class="col-2">
+              <h2 class="display-1 mb-3 numbers" id="right-term">?</h2>
+            </div>
+            <div class="col-2">
+                <h2 class="display-1 mb-3">=</h2>
+            </div>
+            <div class="col-2">
+                <h2 class="display-1 mb-3 numbers" id="answer-term">?</h2>
+            </div>
+            <div class="col-2">
+              &nbsp;
+          </div>
+      </div>
+
+      <br/>
+
+
+        <div class="row">
+            <div class="col-2">
+              <div class="grid-container">
+                <div id="left-item-0" class="grid-item"><span class='blank-term-dot'></span></div>
+                <div id="left-item-1" class="grid-item"><span class='blank-term-dot'></span></div>
+                <div id="left-item-2" class="grid-item"><span class='blank-term-dot'></span></div>
+                <div id="left-item-3" class="grid-item"><span class='blank-term-dot'></span></div>
+                <div id="left-item-4" class="grid-item"><span class='blank-term-dot'></span></div>
+                <div id="left-item-5" class="grid-item"><span class='blank-term-dot'></span></div>
+                <div id="left-item-6" class="grid-item"><span class='blank-term-dot'></span></div>
+                <div id="left-item-7" class="grid-item"><span class='blank-term-dot'></span></div>
+                <div id="left-item-8" class="grid-item"><span class='blank-term-dot'></span></div>
+                <div id="left-item-9" class="grid-item"><span class='blank-term-dot'></span></div>
+              </div>
+            </div>  
+            <div class="col-2">                
+            </div>  
+            <div class="col-2">
+                <div class="grid-container">
+                  <div id="right-item-0" class="grid-item"><span class='blank-term-dot'></span></div>
+                  <div id="right-item-1" class="grid-item"><span class='blank-term-dot'></span></div>
+                  <div id="right-item-2" class="grid-item"><span class='blank-term-dot'></span></div>
+                  <div id="right-item-3" class="grid-item"><span class='blank-term-dot'></span></div>
+                  <div id="right-item-4" class="grid-item"><span class='blank-term-dot'></span></div>
+                  <div id="right-item-5" class="grid-item"><span class='blank-term-dot'></span></div>
+                  <div id="right-item-6" class="grid-item"><span class='blank-term-dot'></span></div>
+                  <div id="right-item-7" class="grid-item"><span class='blank-term-dot'></span></div>
+                  <div id="right-item-8" class="grid-item"><span class='blank-term-dot'></span></div>
+                  <div id="right-item-9" class="grid-item"><span class='blank-term-dot'></span></div>
+                </div>  
+            </div>
+            <div class="col-2">
+            </div>
+            <div class="col-2">
+              <div class="grid-container">
+                <div id="answer-item-0" class="grid-item"><span class='blank-term-dot' id='answer-dot-0'></span></div>
+                <div id="answer-item-1" class="grid-item"><span class='blank-term-dot' id='answer-dot-1'></span></div>
+                <div id="answer-item-2" class="grid-item"><span class='blank-term-dot' id='answer-dot-2'></span></div>
+                <div id="answer-item-3" class="grid-item"><span class='blank-term-dot' id='answer-dot-3'></span></div>
+                <div id="answer-item-4" class="grid-item"><span class='blank-term-dot' id='answer-dot-4'></span></div>
+                <div id="answer-item-5" class="grid-item"><span class='blank-term-dot' id='answer-dot-5'></span></div>
+                <div id="answer-item-6" class="grid-item"><span class='blank-term-dot' id='answer-dot-6'></span></div>
+                <div id="answer-item-7" class="grid-item"><span class='blank-term-dot' id='answer-dot-7'></span></div>
+                <div id="answer-item-8" class="grid-item"><span class='blank-term-dot' id='answer-dot-8'></span></div>
+                <div id="answer-item-9" class="grid-item"><span class='blank-term-dot' id='answer-dot-9'></span></div>
+              </div>  
+              <br/>
+              <div class="grid-container">
+                <div id="answer-item-10" class="grid-item"><span class='blank-term-dot' id='answer-dot-10'></span></div>
+                <div id="answer-item-11" class="grid-item"><span class='blank-term-dot' id='answer-dot-11'></span></div>
+                <div id="answer-item-12" class="grid-item"><span class='blank-term-dot' id='answer-dot-12'></span></div>
+                <div id="answer-item-13" class="grid-item"><span class='blank-term-dot' id='answer-dot-13'></span></div>
+                <div id="answer-item-14" class="grid-item"><span class='blank-term-dot' id='answer-dot-14'></span></div>
+                <div id="answer-item-15" class="grid-item"><span class='blank-term-dot' id='answer-dot-15'></span></div>
+                <div id="answer-item-16" class="grid-item"><span class='blank-term-dot' id='answer-dot-16'></span></div>
+                <div id="answer-item-17" class="grid-item"><span class='blank-term-dot' id='answer-dot-17'></span></div>
+                <div id="answer-item-18" class="grid-item"><span class='blank-term-dot' id='answer-dot-18'></span></div>
+                <div id="answer-item-19" class="grid-item"><span class='blank-term-dot' id='answer-dot-19'></span></div>
+              </div>  
+            </div>
+        </div>        
+
+        <br/><br/>
+
+        <div class="row">
+          <div class="col-8">
+            <h4>Select an answer....</h4>
+          </div>
+        </div>
+
+        <br/>
+
+        <div class="row">          
+            <div class="col-4">
+              <button class="favorite styled answer-button" type="button" id="answer-button-0" onclick="showAnswer(this)">Answer 1</button>
+            </div>
+            <div class="col-4">
+              <button class="favorite styled answer-button" type="button" id="answer-button-1" onclick="showAnswer(this)">Answer 2</button>
+            </div>
+            <div class="col-4">
+              <button class="favorite styled answer-button" type="button" id="answer-button-2" onclick="showAnswer(this)">Answer 3</button>
+            </div>
+        </div>
+
+        <br/><br/>
+
+        <div class="row">
+          <div class="col-10 collapse" id="correctmsg">
+            <div class="alert alert-success" role="alert">
+              <h4 class="alert-heading text-center">Well done!</h4>
+            </div>
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="col-10 collapse" id="oopsmsg">
+            <div class="alert alert-danger" role="alert">
+              <h4 class="alert-heading text-center">Oops!</h4>
+            </div>
+          </div>
+        </div>
+
+        <br/>
+
+        <div class="row">
+          <div class="col-10 collapse" id="nextquestion" >
+            <button type="button" class="btn btn-dark" onclick="location.reload();">Next Question</button>
+          </div>
+        </div>
+
+    </div>
+
+  </body>
+
+  <script type="module">
+
+    import anime from './anime.es.js';
+
+    class Animation {
+      constructor(elementName, deltaX, deltaY) {
+        this.elementName = elementName;
+        this.deltaX = deltaX;
+        this.deltaY = deltaY;
+      }
+    }
+
+    class Question {
+      constructor(leftTerm, rightTerm, answerTerm, possibleAnswers) {
+        this.leftTerm = leftTerm;
+        this.rightTerm = rightTerm;
+        this.answerTerm = answerTerm;
+        this.possibleAnswers = possibleAnswers;
+      }
+    }
+
+    function addToTimeline(timeline, animations, offset) {
+      // Play all animations
+      var i;
+      var animation;
+
+      for (i = 0; i < animations.length; i++) {
+
+        timeline.add( {
+          targets: animations[i].elementName,
+          // Properties 
+          translateX: (animations[i].deltaX),
+          translateY: (animations[i].deltaY),
+          borderRadius: 50,
+          // Property Parameters
+          duration: 2000,
+          easing: 'linear',
+          // Animation Parameters
+          direction: 'normal'
+
+        }, offset);
+      }
+    };
+
+    function fillInDots(eleItemNamePrefix, eleTermNamePrefix, termValue) {
+      var i;
+      for (i = 0; i < termValue; i++) {
+        // Find item and child placeholder
+        var eleName = eleItemNamePrefix + "-" + i;
+        var itemEle = document.getElementById(eleName);
+
+        // Create new element
+        var dotEle = document.createElement("SPAN");
+        dotEle.className = eleTermNamePrefix + "-dot";
+        dotEle.id = eleTermNamePrefix + "-dot-" + i;
+        dotEle.style.zIndex = 1;
+
+        // Replace placeholder child with new element
+        itemEle.replaceChild(dotEle, itemEle.lastChild);
+      } 
+    };
+
+    function calcAnimations(termValue, offsetValue, dotEleNamePrefix) {
+      var animations = new Array();
+      var i, j;
+
+      for (i = 0, j=offsetValue+i; i < termValue; i++, j++) {
+        // Find item and child placeholder
+        var eleName = dotEleNamePrefix + "-" + i;
+        var dotEle = document.getElementById(eleName);
+        var termRect = dotEle.getBoundingClientRect();
+
+        var ansDotEleName = "answer-dot-" + j;
+        var ansDotEle = document.getElementById(ansDotEleName);
+        var answerRect = ansDotEle.getBoundingClientRect();
+
+        var animation = new Animation("#" + eleName, (answerRect.left - termRect.left), (answerRect.top - termRect.top));
+        animations.push(animation);
+      }
+
+      return animations;
+    }
+
+    function generateQuestion() {
+      // Calc 2 terms between 0-9
+      var leftTerm = Math.floor(Math.random() * 10);
+      var rightTerm = Math.floor(Math.random() * 10);
+      var answerTerm = leftTerm + rightTerm;
+
+      // Calc an offset that belongs to the set of [-1, 0, 1]
+      var offsetCoeff = Math.random();
+      var offset = (offsetCoeff < .333)?-1:(offsetCoeff < .666)?0:1;
+      var answerPlusOffset = answerTerm + offset;
+      var possibleAnswers = [answerPlusOffset - 1, answerPlusOffset, answerPlusOffset + 1];
+
+      return new Question(leftTerm, rightTerm, answerTerm, possibleAnswers);
+    }
+
+    function wrapup(answerTermEle, answerTermValue, iscorrect) {
+      answerTermEle.innerHTML = answerTermValue;
+
+      (iscorrect == 'true')?$('#correctmsg').collapse('show'):$('#oopsmsg').collapse('show');
+      $('#nextquestion').collapse('show')
+    }
+
+    function setupAnswerButton(answerButtonName, possibleAnswerValue, actualAnswerValue) {
+      var answerButton = document.getElementById(answerButtonName);
+      answerButton.innerHTML = possibleAnswerValue;
+      answerButton.setAttribute("data-is-correct", (possibleAnswerValue == actualAnswerValue));
+    }
+
+    function runAnimation(iscorrect) {
+      // Calculate translations for left
+      var leftAnimations = calcAnimations(leftTermValue, 0, "left-term-dot");
+      var rightAnimations = calcAnimations(rightTermValue, leftTermValue, "right-term-dot");
+
+      // Create a timeline with default parameters
+        var timeline = anime.timeline({
+          easing: 'easeOutExpo',
+          duration: 4000
+      });
+
+      // Place animations on timeline
+      var animationLeft = addToTimeline(timeline, leftAnimations, 0);
+      var animationRight = addToTimeline(timeline, rightAnimations, 2000);
+
+      // Fill in answer on DOM
+      setTimeout(wrapup, 4500, answerTermEle, answerTermValue, iscorrect);
+    }
+    // Make this method available from the main page
+    window.runAnimation = runAnimation;
+
+    // Get DOM elements for equation
+    var leftTermEle = document.getElementById("left-term");
+    var rightTermEle = document.getElementById("right-term");
+    var answerTermEle = document.getElementById("answer-term");
+
+    // Generate question 
+    var question = generateQuestion();
+    var leftTermValue = question.leftTerm;
+    var rightTermValue = question.rightTerm;
+    var answerTermValue = question.answerTerm;
+
+    // Fill in left and right term values on the page
+    leftTermEle.innerHTML = leftTermValue;
+    rightTermEle.innerHTML = rightTermValue;
+
+    // Fill in ten frame dots 
+    fillInDots("left-item", "left-term", leftTermValue);
+    fillInDots("right-item", "right-term", rightTermValue);
+
+    // Fill in answers to buttons
+    setupAnswerButton("answer-button-0", question.possibleAnswers[0], answerTermValue);
+    setupAnswerButton("answer-button-1", question.possibleAnswers[1], answerTermValue);
+    setupAnswerButton("answer-button-2", question.possibleAnswers[2], answerTermValue);
+
+  </script>
+
+  <script type="text/javascript">
+      function showAnswer(button) {
+        // Highlight button selected
+        button.style.backgroundColor = "#FF69B4";
+
+        // Disable all buttons        
+        $( ".answer-button").prop("disabled", true);
+
+        // Run animation
+        runAnimation(button.getAttribute("data-is-correct"));
+      }
+  </script>
+
+</html>

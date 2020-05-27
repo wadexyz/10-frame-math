@@ -274,12 +274,17 @@
           duration: 4000
       });
 
+      // Calc time offsets
+      var leftAnimationDelay = 0;
+      var rightAnimationDelay = (leftAnimations.length == 0)?0:2000;
+      var wrapUpDelay = ((rightAnimations.length == 0)?rightAnimationDelay:rightAnimationDelay+1700) + 300;
+
       // Place animations on timeline
-      var animationLeft = addToTimeline(timeline, leftAnimations, 0);
-      var animationRight = addToTimeline(timeline, rightAnimations, 2000);
+      var animationLeft = addToTimeline(timeline, leftAnimations, leftAnimationDelay);
+      var animationRight = addToTimeline(timeline, rightAnimations, rightAnimationDelay);
 
       // Fill in answer on DOM
-      setTimeout(wrapup, 4500, answerTermEle, answerTermValue, iscorrect);
+      setTimeout(wrapup, wrapUpDelay, answerTermEle, answerTermValue, iscorrect);
     }
     // Make this method available from the main page
     window.runAnimation = runAnimation;

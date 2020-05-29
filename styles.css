@@ -50,8 +50,8 @@ body {background-color: azure;
   .styled {
     border: 0;
     line-height: 2;
-    padding: 0 32px;
-    font-size: 2rem;
+    padding: 0 30px;
+    font-size: 1.7rem;
     text-align: center;
     color: #fff;
     text-shadow: 1px 1px 1px #000;

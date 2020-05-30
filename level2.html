@@ -30,7 +30,7 @@
                 <div class="display-3 mt-0 mb-3 numbers" id="left-term">?</div>
             </div>  
             <div class="col-2">
-                <div id="operation" class="display-4 mt-2 ml-3">+</div>
+                <div id="operation" class="display-4 mt-2 ml-4">+</div>
             </div>  
             <div class="col-2">
               <div class="display-3 mt-0 mb-3 numbers" id="right-term">?</div>
@@ -249,7 +249,7 @@
       }
     }
 
-    function addToTimeline(timeline, animations, offset) {
+    function addDotMoveToTimeline(timeline, animations, offset) {
       // Play all animations
       var i;
       var animation;
@@ -267,7 +267,6 @@
           easing: 'linear',
           // Animation Parameters
           direction: 'normal'
-
         }, offset);
       }
     };
@@ -290,19 +289,19 @@
       } 
     };
 
-    function calcAnimations(termValue, offsetValue, dotEleNamePrefix) {
+    function calcAnimations(termValue, offsetValue, dotEleNamePrefix, operation) {
       var animations = new Array();
       var i, j;
 
       for (i = 0, j=offsetValue+i; i < termValue; i++, j++) {
-        var animation = calcAnimation(dotEleNamePrefix, i, j );
+        var animation = calcAnimation(dotEleNamePrefix, i, j , operation);
         animations.push(animation);
       }
 
       return animations;
     }
 
-    function calcAnimation(dotEleNamePrefix, srcEleIndex, targetEleIndex )
+    function calcAnimation(dotEleNamePrefix, srcEleIndex, targetEleIndex, operation)
     {
         // Find item and child placeholder
         var eleName = dotEleNamePrefix + "-" + srcEleIndex;
@@ -312,6 +311,14 @@
         var ansDotEleName = "answer-dot-" + targetEleIndex;
         var ansDotEle = document.getElementById(ansDotEleName);
         var answerRect = ansDotEle.getBoundingClientRect();
+
+        // SIDE EFFECT - if it's a minus operation, mark up affected dots with a class
+        if (operation=='-') {
+          var rightEleDot = document.getElementById("right-term-dot-" + srcEleIndex);
+          var leftEleDot = document.getElementById("left-term-dot-" + targetEleIndex);
+          rightEleDot.classList.add("erase-me-when-complete");
+          leftEleDot.classList.add("erase-me-when-complete");          
+        }
 
         var animation = new Animation("#" + eleName, (answerRect.left - termRect.left), (answerRect.top - termRect.top));
         return animation;
@@ -381,8 +388,8 @@
     function runAnimation(iscorrect) {
       // Calculate translations for left
       var offset = (operation=='+'?leftTermValue:leftTermValue-rightTermValue);
-      var leftAnimations = calcAnimations(leftTermValue, 0, "left-term-dot");
-      var rightAnimations = calcAnimations(rightTermValue, offset, "right-term-dot");
+      var leftAnimations = calcAnimations(leftTermValue, 0, "left-term-dot", "n/a");
+      var rightAnimations = calcAnimations(rightTermValue, offset, "right-term-dot", operation);
 
       // Create a timeline with default parameters
         var timeline = anime.timeline({
@@ -393,11 +400,22 @@
       // Calc time offsets
       var leftAnimationDelay = 0;
       var rightAnimationDelay = (leftAnimations.length == 0)?0:2000;
-      var wrapUpDelay = ((rightAnimations.length == 0)?rightAnimationDelay:rightAnimationDelay+1700) + 300;
+      var dotMoveCompeleteDelay = ((rightAnimations.length == 0)?rightAnimationDelay:rightAnimationDelay+1700);
+      var wrapUpDelay = dotMoveCompeleteDelay + 300;
 
       // Place animations on timeline
-      var animationLeft = addToTimeline(timeline, leftAnimations, leftAnimationDelay);
-      var animationRight = addToTimeline(timeline, rightAnimations, rightAnimationDelay);
+      var animationLeft = addDotMoveToTimeline(timeline, leftAnimations, leftAnimationDelay);
+      var animationRight = addDotMoveToTimeline(timeline, rightAnimations, rightAnimationDelay);
+
+      // If it's a minus, erase the overlay dots after the move
+      if (operation=='-') {
+        timeline.add({
+          targets: '.erase-me-when-complete',
+          opacity: 0,
+          duration: 1250,
+          easing: 'linear'
+        }, dotMoveCompeleteDelay);
+      }
 
       // Fill in answer on DOM
       setTimeout(wrapup, wrapUpDelay, answerTermEle, answerTermValue, iscorrect);

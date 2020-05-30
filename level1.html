@@ -30,7 +30,7 @@
                 <div class="display-3 mt-0 mb-3 numbers" id="left-term">?</div>
             </div>  
             <div class="col-2">
-                <div class="display-4 mt-2 ml-3">+</div>
+                <div id="operation" class="display-4 mt-2 ml-3">+</div>
             </div>  
             <div class="col-2">
               <div class="display-3 mt-0 mb-3 numbers" id="right-term">?</div>
@@ -73,6 +73,19 @@
                 <div id="left-item-18" class="grid-item"><span class="blank-term-dot"></span></div>
                 <div id="left-item-19" class="grid-item"><span class="blank-term-dot"></span></div>
               </div>
+              <br/>
+              <div id="left-items-20-to-29" class="grid-container collapse">
+                <div id="left-item-20" class="grid-item"><span class="blank-term-dot"></span></div>
+                <div id="left-item-21" class="grid-item"><span class="blank-term-dot"></span></div>
+                <div id="left-item-22" class="grid-item"><span class="blank-term-dot"></span></div>
+                <div id="left-item-23" class="grid-item"><span class="blank-term-dot"></span></div>
+                <div id="left-item-24" class="grid-item"><span class="blank-term-dot"></span></div>
+                <div id="left-item-25" class="grid-item"><span class="blank-term-dot"></span></div>
+                <div id="left-item-26" class="grid-item"><span class="blank-term-dot"></span></div>
+                <div id="left-item-27" class="grid-item"><span class="blank-term-dot"></span></div>
+                <div id="left-item-28" class="grid-item"><span class="blank-term-dot"></span></div>
+                <div id="left-item-29" class="grid-item"><span class="blank-term-dot"></span></div>
+              </div>
             </div>  
             <div class="col-2"></div>  
             <div class="col-2">
@@ -100,6 +113,19 @@
                   <div id="right-item-17" class="grid-item"><span class="blank-term-dot"></span></div>
                   <div id="right-item-18" class="grid-item"><span class="blank-term-dot"></span></div>
                   <div id="right-item-19" class="grid-item"><span class="blank-term-dot"></span></div>
+                </div>  
+                <br/>
+                <div id="right-items-20-to-29" class="grid-container collapse">
+                  <div id="right-item-20" class="grid-item"><span class="blank-term-dot"></span></div>
+                  <div id="right-item-21" class="grid-item"><span class="blank-term-dot"></span></div>
+                  <div id="right-item-22" class="grid-item"><span class="blank-term-dot"></span></div>
+                  <div id="right-item-23" class="grid-item"><span class="blank-term-dot"></span></div>
+                  <div id="right-item-24" class="grid-item"><span class="blank-term-dot"></span></div>
+                  <div id="right-item-25" class="grid-item"><span class="blank-term-dot"></span></div>
+                  <div id="right-item-26" class="grid-item"><span class="blank-term-dot"></span></div>
+                  <div id="right-item-27" class="grid-item"><span class="blank-term-dot"></span></div>
+                  <div id="right-item-28" class="grid-item"><span class="blank-term-dot"></span></div>
+                  <div id="right-item-29" class="grid-item"><span class="blank-term-dot"></span></div>
                 </div>  
             </div>
             <div class="col-2"></div>
@@ -207,9 +233,10 @@
     }
 
     class Question {
-      constructor(leftTerm, rightTerm, answerTerm, possibleAnswers) {
+      constructor(leftTerm, rightTerm, operation, answerTerm, possibleAnswers) {
         this.leftTerm = leftTerm;
         this.rightTerm = rightTerm;
+        this.operation = operation;
         this.answerTerm = answerTerm;
         this.possibleAnswers = possibleAnswers;
       }
@@ -268,26 +295,33 @@
       var i, j;
 
       for (i = 0, j=offsetValue+i; i < termValue; i++, j++) {
-        // Find item and child placeholder
-        var eleName = dotEleNamePrefix + "-" + i;
-        var dotEle = document.getElementById(eleName);
-        var termRect = dotEle.getBoundingClientRect();
-
-        var ansDotEleName = "answer-dot-" + j;
-        var ansDotEle = document.getElementById(ansDotEleName);
-        var answerRect = ansDotEle.getBoundingClientRect();
-
-        var animation = new Animation("#" + eleName, (answerRect.left - termRect.left), (answerRect.top - termRect.top));
+        var animation = calcAnimation(dotEleNamePrefix, i, j );
         animations.push(animation);
       }
 
       return animations;
     }
 
+    function calcAnimation(dotEleNamePrefix, srcEleIndex, targetEleIndex )
+    {
+        // Find item and child placeholder
+        var eleName = dotEleNamePrefix + "-" + srcEleIndex;
+        var dotEle = document.getElementById(eleName);
+        var termRect = dotEle.getBoundingClientRect();
+
+        var ansDotEleName = "answer-dot-" + targetEleIndex;
+        var ansDotEle = document.getElementById(ansDotEleName);
+        var answerRect = ansDotEle.getBoundingClientRect();
+
+        var animation = new Animation("#" + eleName, (answerRect.left - termRect.left), (answerRect.top - termRect.top));
+        return animation;
+    }
+
     function generateQuestion() {
 
-      var terms = (QUESTION_LEVEL==2)?generateLevel2Terms():generateLevel1Terms();
-      var answerTerm = terms.leftTerm + terms.rightTerm;
+      var operation = (Math.random() > 0.5)?"+":"-";
+      var terms = (QUESTION_LEVEL==2)?generateLevel2Terms(operation):generateLevel1Terms(operation);
+      var answerTerm = (operation=='+')?(terms.leftTerm + terms.rightTerm):(terms.leftTerm - terms.rightTerm);
 
       // Calc an offset that belongs to the set of [-1, 0, 1]
       var offsetCoeff = Math.random();
@@ -295,21 +329,33 @@
       var answerPlusOffset = answerTerm + offset;
       var possibleAnswers = [answerPlusOffset - 1, answerPlusOffset, answerPlusOffset + 1];
 
-      return new Question(terms.leftTerm, terms.rightTerm, answerTerm, possibleAnswers);
+      return new Question(terms.leftTerm, terms.rightTerm, operation, answerTerm, possibleAnswers);
     }
 
-    function generateLevel1Terms() {
+    function generateLevel1Terms(operation) {
       // Calc left and right terms
-      var leftTerm = generateRandom(10);
-      var rightTerm = generateRandom(10);
+      if (operation == '+') {
+        var leftTerm = generateRandom(10);
+        var rightTerm = generateRandom(10);
+      } else {
+        // minus
+        var leftTerm = generateRandom(10);
+        var rightTerm = generateRandom(leftTerm);
+      }
 
       return new Terms(leftTerm, rightTerm);
     }
 
-    function generateLevel2Terms() {
+    function generateLevel2Terms(operation) {
       // Calc left and right terms
-      var leftTerm = generateRandom(20);
-      var rightTerm = generateRandom(30 - leftTerm);
+      if (operation == '+') {
+        var leftTerm = generateRandom(30);
+        var rightTerm = generateRandom(30 - leftTerm);
+      } else {
+        // minus
+        var leftTerm = generateRandom(30);
+        var rightTerm = generateRandom(leftTerm);
+      }
 
       return new Terms(leftTerm, rightTerm);
     }
@@ -334,8 +380,9 @@
 
     function runAnimation(iscorrect) {
       // Calculate translations for left
+      var offset = (operation=='+'?leftTermValue:leftTermValue-rightTermValue);
       var leftAnimations = calcAnimations(leftTermValue, 0, "left-term-dot");
-      var rightAnimations = calcAnimations(rightTermValue, leftTermValue, "right-term-dot");
+      var rightAnimations = calcAnimations(rightTermValue, offset, "right-term-dot");
 
       // Create a timeline with default parameters
         var timeline = anime.timeline({
@@ -365,25 +412,35 @@
 
     // Generate question 
     var question = generateQuestion();
+    var operation = question.operation;
     var leftTermValue = question.leftTerm;
     var rightTermValue = question.rightTerm;
     var answerTermValue = question.answerTerm;
+
+    // Set operator on screen
+    $("#operation").text(question.operation);
 
     // Show extra ten frames as necessary
     if (leftTermValue > 10) {
       $('#left-items-10-to-19').collapse('show');
     }
+    if (leftTermValue > 20) {
+      $('#left-items-20-to-29').collapse('show');
+    }
     if (rightTermValue > 10) {
       $('#right-items-10-to-19').collapse('show');
     }
+    if (rightTermValue > 20) {
+      $('#right-items-20-to-29').collapse('show');
+    }
+
     var maxPossibleAnswerValue = Math.max.apply(Math,question.possibleAnswers);
-    if (maxPossibleAnswerValue > 10) {   
+    if (Math.max(maxPossibleAnswerValue, leftTermValue) > 10) {   
       $('#answer-items-10-to-19').collapse('show');
     }
-    if (maxPossibleAnswerValue > 20) {   
+    if (Math.max(maxPossibleAnswerValue, leftTermValue) > 20) {   
       $('#answer-items-20-to-29').collapse('show');
     }
-    
 
     // Fill in left and right term values on the page
     leftTermEle.innerHTML = leftTermValue;
